@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+case "$1" in
+    -help|-h)
+        echo "Usage: $0 <destination-directory>"
+        exit 1
+        ;;
+esac
+
+dest="$1"
+destrepo=$(cd "$(dirname "$dest")" && git rev-parse --show-toplevel)
+
+base=$(basename "$dest")
+newbase=submod-$(basename "$destrepo")
+
+
+gitdir=$(git rev-parse --git-dir)
+
+git worktree add --detach "$dest"
+mv "$gitdir/worktrees/$base" "$gitdir/worktrees/$newbase"
+
+submodule_gitdir=$(cat "$dest/.git")
+echo "${submodule_gitdir%/*}/$newbase" > "$dest/.git"
