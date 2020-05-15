@@ -9,11 +9,12 @@ case "$1" in
         ;;
 esac
 
-dest="$1"
+dest=$1
+newbase=${2:-submod-$(basename "$destrepo")}
+
 destrepo=$(cd "$(dirname "$dest")" && git rev-parse --show-toplevel)
 
 base=$(basename "$dest")
-newbase=submod-$(basename "$destrepo")
 
 
 gitdir=$(git rev-parse --git-dir)
