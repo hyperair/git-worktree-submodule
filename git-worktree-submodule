@@ -3,7 +3,7 @@
 set -e
 
 case "$1" in
-    -help|-h)
+    --help|-h)
         echo "Usage: $0 <destination-directory>"
         exit 1
         ;;
